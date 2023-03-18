@@ -12,22 +12,18 @@ import java.util.Objects;
 public abstract class ShapedRecipe extends Recipe {
     private final int width;
     private final int height;
-    private String group;
     private final List<DeclareRecipesPacket.Ingredient> ingredients;
-    private ItemStack result;
 
     protected ShapedRecipe(@NotNull String recipeId,
                            int width,
                            int height,
                            @NotNull String group,
-                           @Nullable List<DeclareRecipesPacket.Ingredient> ingredients,
-                           @NotNull ItemStack result) {
-        super(Type.SHAPED, recipeId);
+                           @NotNull ItemStack result,
+                           @Nullable List<DeclareRecipesPacket.Ingredient> ingredients) {
+        super(Type.SHAPED, recipeId, group, result);
         this.width = width;
         this.height = height;
-        this.group = group;
         this.ingredients = Objects.requireNonNullElseGet(ingredients, LinkedList::new);
-        this.result = result;
     }
 
     public int getWidth() {
@@ -36,15 +32,6 @@ public abstract class ShapedRecipe extends Recipe {
 
     public int getHeight() {
         return height;
-    }
-
-    @NotNull
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(@NotNull String group) {
-        this.group = group;
     }
 
     public void addIngredient(DeclareRecipesPacket.Ingredient ingredient) {
@@ -58,14 +45,5 @@ public abstract class ShapedRecipe extends Recipe {
     @NotNull
     public List<DeclareRecipesPacket.Ingredient> getIngredients() {
         return ingredients;
-    }
-
-    @NotNull
-    public ItemStack getResult() {
-        return result;
-    }
-
-    public void setResult(@NotNull ItemStack result) {
-        this.result = result;
     }
 }

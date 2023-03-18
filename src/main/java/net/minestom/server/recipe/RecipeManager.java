@@ -41,9 +41,9 @@ public class RecipeManager {
     }
 
     private void refreshRecipesPacket() {
-        List<DeclareRecipesPacket.DeclaredRecipe> recipesCache = new ArrayList<>();
+        List<DeclareRecipesPacket.DeclaredRecipe> recipesCache = new ArrayList<>(recipes.size());
         for (Recipe recipe : recipes) {
-            switch (recipe.recipeType) {
+            switch (recipe.getRecipeType()) {
                 case SHAPELESS -> {
                     ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
                     recipesCache.add(

@@ -5,9 +5,7 @@ import net.minestom.server.network.packet.server.play.DeclareRecipesPacket;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BlastingRecipe extends Recipe {
-    private String group;
     private DeclareRecipesPacket.Ingredient ingredient;
-    private ItemStack result;
     private float experience;
     private int cookingTime;
 
@@ -15,23 +13,14 @@ public abstract class BlastingRecipe extends Recipe {
             @NotNull String recipeId,
             @NotNull String group,
             @NotNull ItemStack result,
+            @NotNull DeclareRecipesPacket.Ingredient ingredient,
             float experience,
             int cookingTime
     ) {
-        super(Type.BLASTING, recipeId);
-        this.group = group;
-        this.result = result;
+        super(Type.BLASTING, recipeId, group, result);
+        this.ingredient = ingredient;
         this.experience = experience;
         this.cookingTime = cookingTime;
-    }
-
-    @NotNull
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(@NotNull String group) {
-        this.group = group;
     }
 
     @NotNull
@@ -41,15 +30,6 @@ public abstract class BlastingRecipe extends Recipe {
 
     public void setIngredient(@NotNull DeclareRecipesPacket.Ingredient ingredient) {
         this.ingredient = ingredient;
-    }
-
-    @NotNull
-    public ItemStack getResult() {
-        return result;
-    }
-
-    public void setResult(@NotNull ItemStack result) {
-        this.result = result;
     }
 
     public float getExperience() {
