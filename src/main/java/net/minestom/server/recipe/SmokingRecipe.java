@@ -14,12 +14,14 @@ public abstract class SmokingRecipe extends Recipe {
     protected SmokingRecipe(
             @NotNull String recipeId,
             @NotNull String group,
+            @NotNull DeclareRecipesPacket.Ingredient ingredient,
             @NotNull ItemStack result,
             float experience,
             int cookingTime
     ) {
         super(Type.SMOKING, recipeId);
         this.group = group;
+        this.ingredient = ingredient;
         this.result = result;
         this.experience = experience;
         this.cookingTime = cookingTime;
