@@ -7,29 +7,28 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Recipe {
-    private final Type recipeType;
-    private final String recipeId;
+    protected final RecipeType type;
+    protected final String id;
     private final String group;
     private final ItemStack result;
 
-    protected Recipe(@NotNull Type recipeType,
-                     @NotNull String recipeId,
+    protected Recipe(@NotNull RecipeType type,
+                     @NotNull String id,
                      @NotNull String group,
                      @NotNull ItemStack result) {
-        this.recipeType = recipeType;
-        this.recipeId = recipeId;
+        this.type = type;
+        this.id = id;
         this.group = group;
         this.result = result;
     }
 
     @NotNull
-    public Type getRecipeType() {
-        return recipeType;
+    public RecipeType type() {
+        return type;
     }
 
-    @NotNull
-    public String getRecipeId() {
-        return recipeId;
+    public @NotNull String id() {
+        return id;
     }
 
     @NotNull
@@ -41,21 +40,4 @@ public abstract class Recipe {
     public ItemStack getResult() {
         return result;
     }
-
-    public abstract boolean shouldShow(@NotNull Player player);
-
-    @Nullable
-    public abstract ItemStack assemble(@NotNull Inventory inventory);
-
-    public enum Type {
-        SHAPELESS,
-        SHAPED,
-        SMELTING,
-        BLASTING,
-        SMOKING,
-        CAMPFIRE_COOKING,
-        STONECUTTING,
-        SMITHING
-    }
-
 }

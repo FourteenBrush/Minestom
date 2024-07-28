@@ -1,6 +1,7 @@
 package net.minestom.server.inventory;
 
 import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.item.EntityEquipEvent;
@@ -147,6 +148,7 @@ public non-sealed class PlayerInventory extends AbstractInventory implements Equ
             EntityEquipEvent entityEquipEvent = new EntityEquipEvent(player, itemStack, equipmentSlot);
             EventDispatcher.call(entityEquipEvent);
             itemStack = entityEquipEvent.getEquippedItem();
+            this.player.updateEquipmentAttributes(this.itemStacks[slot], itemStack, equipmentSlot);
         }
         this.itemStacks[slot] = itemStack;
 
@@ -166,7 +168,12 @@ public non-sealed class PlayerInventory extends AbstractInventory implements Equ
      * @param itemStack the item stack in the slot
      */
     protected void sendSlotRefresh(short slot, ItemStack itemStack) {
-        this.player.sendPacket(new SetSlotPacket((byte) 0, 0, slot, itemStack));
+        var openInventory = player.getOpenInventory();
+        if (openInventory != null && slot >= OFFSET && slot < OFFSET + INNER_INVENTORY_SIZE) {
+            this.player.sendPacket(new SetSlotPacket(openInventory.getWindowId(), 0, (short) (slot + openInventory.getSize() - OFFSET), itemStack));
+        } else if (openInventory == null || slot == OFFHAND_SLOT) {
+            this.player.sendPacket(new SetSlotPacket((byte) 0, 0, slot, itemStack));
+        }
     }
 
     /**
